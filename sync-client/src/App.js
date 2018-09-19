@@ -8,19 +8,19 @@ class App extends Component {
     super()
     
     this.state = {
-      endpoint: "http://10.0.0.59:3000" // this is where we are connecting to with sockets
+      endpoint: "http://10.0.0.59:5000", // this is where we are connecting to with sockets
+      color: 'white'
     }
   }
   
   // method for emitting a socket.io event
   send = () => {
-    const socket = socketIOClient(this.state.endpoint)
-    
-    // this emits an event to the socket (your server) with an argument of 'red'
-    // you can make the argument any color you would like, or any kind of data you want to send.
-    
-    socket.emit('change color', 'red') 
-    // socket.emit('change color', 'red', 'yellow') | you can have multiple arguments
+    const socket = socketIOClient(this.state.endpoint);
+    socket.emit('change color', this.state.color) // change 'red' to this.state.color
+  }
+
+  setColor = (color) => {
+    this.setState({ color })
   }
   
   // render method that renders in code if the state is updated
@@ -40,6 +40,8 @@ class App extends Component {
     return (
       <div style={{ textAlign: "center" }}>
         <button onClick={() => this.send()}>Change Color</button>
+        <button id="f36da0" onClick={() => this.setColor('#f36da0')}>#f36da0</button>
+        <button id="ffaa00" onClick={() => this.setColor('#ffaa00')}>Zoosta</button>
       </div>
     )
   }
